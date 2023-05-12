@@ -3,13 +3,13 @@
 :root {
   --color-main: #71c6dd;
   --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
+  --color-dark: #262425;
+  --color-dark-medium: #3e3a3c;
   --color-dark-light: #696d97;
   --color-light: #e5e5e5;
   --color-gray: #8b8b8b;
   --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
+  --color-bg: #373636;
   --color-success: #5dd693;
   --color-error: #fc4b0b;
 }
@@ -67,6 +67,25 @@ a {
   max-width: 120rem;
   width: 90%;
   margin: auto;
+}
+
+.container ul li{
+  display: inline-block;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: clip; 
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+.container ul li a{
+  color: var(--color-light);
+
+}
+
+.container ul li a:hover{
+  color: var(--color-error);
+
 }
 
 .btn {
@@ -272,25 +291,30 @@ a {
 
 .header > .container {
   display: flex;
-  gap: 9.5rem;
+  gap: 4rem;
 }
 
 .header__logo,
-.header__user {
+.header__user, .header__link {
   display: flex;
   gap: 2rem;
   align-items: center;
 }
 
+
 .header__logo > img {
-  height: 3.2rem;
-  width: 3.2rem;
+  height: 5rem;
+  width: 6rem;
 }
 
 .header__logo > h1 {
   font-weight: 700;
   font-size: 2rem;
   color: var(--color-light);
+}
+
+.header__logo > h1:hover{
+  color: var(--color-error)
 }
 
 .header__search > label {
@@ -317,27 +341,7 @@ a {
   color: var(--color-light);
 }
 
-@media screen and (max-width: 800px) {
-  .header__search input {
-    width: 20rem;
-  }
 
-  .header > .container {
-    gap: 3rem;
-  }
-}
-
-@media screen and (max-width: 700px) {
-  .header__logo h1 {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .header__search {
-    display: none;
-  }
-}
 
 .header__menu {
   margin-left: auto;
@@ -1162,4 +1166,27 @@ a {
   font-weight: 500;
   color: var(--color-main);
   font-weight: 1.4rem;
+}
+
+
+@media screen and (max-width: 800px) {
+  .header__search input {
+    width: 20rem;
+  }
+
+  .header > .container {
+    gap: 3rem;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header__logo h1 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header__search {
+    display: none;
+  }
 }

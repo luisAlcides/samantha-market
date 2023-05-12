@@ -3,7 +3,7 @@
     <div class="container">
         <a href="{% url 'home' %}" class="header__logo">
             <img src="{% static 'img/logo.svg' %}" />
-            <h1>StudyBuddy</h1>
+            <h1>Samantha Market</h1>
         </a>
         <form class="header__search" method="GET" action="{% url 'home' %}">
             <label>
@@ -16,6 +16,14 @@
                 <input name="q" placeholder="Search for posts" />
             </label>
         </form>
+        <div class="header__link">
+            <ul>
+                <li><a href="#">Blog</a></li>
+                <li><a href="{% url 'activos' %}">Activos</a></li>
+                <li><a href="#">Trading</a></li>
+                <li><a href="#">Contactanos</a></li>
+            </ul>
+        </div>
         <nav class="header__menu">
 
 
@@ -40,7 +48,7 @@
 
             <!-- Not Logged In -->
             <a href="{% url 'login' %}">
-                <img src="{% static 'images/avatar.svg' %}" />
+                <img src="{% static 'img/avatar.svg' %}" />
                 <p>Login</p>
             </a>
             {% endif %}
