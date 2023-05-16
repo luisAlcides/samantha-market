@@ -1,3 +1,5 @@
+import yfinance as yf
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
@@ -6,6 +8,8 @@ from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .models import User
 from .forms import UserForm, MyUserCreationForm
+
+
 
 # Create your views here.
 def loginPage(request):
@@ -77,4 +81,15 @@ def updateUser(request):
 
 
 def activos(request):
-    return render(request, 'base/activos.html', {})
+    symbols = ['AAPL', 'META', 'MSFT', 'AMD', 'GBTC', 'NFLX', 'GOOG', 'TSLA']
+    stocks = []
+    cards_data = []
+    
+    for symbol in symbols:
+        stocks.append(yf.Ticker(symbol))
+    
+    for stock in stocks:
+        cards_data.append({'title': stock.info['symbol'], 'price': round(stock.history().tail(1)["Close"].iloc[0], 4)})
+        print(stock.info)
+    return render(request, 'base/activos.html', {'cards_data': cards_data})
+

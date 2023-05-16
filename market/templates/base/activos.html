@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% comment %} <meta http-equiv="refresh" content="5"> {% endcomment %}
+
+<div class="container">
+    <div class="row justify-content-center">
+      {% for card in cards_data %}
+      <div class="col-sm-4 mt-5">
+        <div class="card">
+          <div class="card-body text-center">
+            <h3 class="card-title text-white">{{ card.title }}</h3>
+            <p class="card-text text-success fs-3">{{card.price }}</p>
+          </div>
+          <div class="card-footer text-center d-flex justify-content-center">
+            <a href="#" class="btn text-white">Ver más</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+  
+
+{% endblock content %}  
