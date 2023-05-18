@@ -30,12 +30,17 @@ img{
 
   .navbar {
     background-color: var(--color-bg);
+    color: white;
   }
 
   .navbar-brand {
     color: #fff;
     font-weight: bold;
   }
+
+.nav-link{
+  color: white;
+}
 
 .nav-link:hover{
     color: var(--color-error);
@@ -50,7 +55,6 @@ img{
 .profile{
   margin-left: 10px;
 }
-
 
 
   /* activos */
@@ -71,3 +75,4 @@ img{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: var(--color-dark);
   }
+

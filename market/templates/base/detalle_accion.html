@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+  <div class="card mt-5">
+    <div class="card-header text-white">
+      <h2>{% trans "Detalles de la acción" %}: {{ symbol }}</h2>
+    </div>
+    <div class="card-body text-white">
+      <p><strong>{% trans "Nombre" %}:</strong> {{ name }}</p>
+      <p><strong>{% trans "Precio" %}:</strong> {{ price }}</p>
+      <p><strong>{% trans "MarketCap" %}:</strong> {{ marketCap }}</p>
+      <p><strong>{% trans "País" %}:</strong> {{ country }}</p>
+      <p><strong>{% trans "sector" %}:</strong> {{ sector }}</p>
+      <p><strong>{% trans "Página web" %}:</strong> <a href="{{ website }}">{{ website }}</a></p>
+      <p><strong>{% trans "Descripción" %}:</strong> {{ longBusinessSummary }}</p>
+    </div>
+    <div class="card-footer">
+      <a href="#" class="btn btn-primary">{% trans "¿Quieres analizar con IA?" %}</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,27 +1,65 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} 
+{% block content %} 
 
-{% block content %}
-{% comment %} <meta http-equiv="refresh" content="5"> {% endcomment %}
-
-<div class="container">
-    <div class="row justify-content-center">
-      {% for card in cards_data %}
-      <div class="col-sm-4 mt-5">
-        <div class="card">
-          <div class="card-body text-center">
-            <h3 class="card-title text-white">{{ card.title }}</h3>
-            <p class="card-text text-success fs-3">{{card.price }}</p>
-          </div>
-          <div class="card-footer text-center d-flex justify-content-center">
-            <a href="#" class="btn text-white">Ver más</a>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    {% for details in most_active_data %}
+      <div class="col-md-4 mb-3">
+        <div class="">
+          <div class="text-white text-center">
+            <h5 class="">{{ details.title }}</h5>
+            <p class="">Price:💲<strong class="text-success">{{ details.price }}</strong> </p>
+            <a href="{% url 'detalle_accion' symbol=details.title %}" class="btn btn-primary">Ver más</a>
           </div>
         </div>
       </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
+</div>
 
 
-  
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-sm-6 mt-5">
+			<form method="POST">
+				{% csrf_token %}
+				<div class="input-group mb-3">
+					<input
+						type="text"
+						class="form-control"
+						name="symbol"
+						placeholder="Ingrese el símbolo de la acción ejemplo: TSLA"
+					/>
+					<button class="btn btn-primary" type="submit">
+						Buscar
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
-{% endblock content %}  
+{% if details %}
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-sm-6 mt-5">
+			<div class="card">
+				<div class="card-header text-white bg-primary">
+					<h5>{{ details.name }}</h5>
+				</div>
+				<div class="card-body text-white">
+					<p>Price:💲<strong class="text-success">{{ details.price }}</strong> </p>
+          <p>Country: {{ details.country }} </p>
+          <p>Capitalizacion de mercado: {{ details.marketCap }} </p>
+					<hr />
+					<a
+						href="{% url 'detalle_accion' symbol=details.symbol %}"
+						class="btn btn-primary"
+						>Ver más</a
+					>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %} {% endblock content %}
