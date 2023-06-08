@@ -39,10 +39,22 @@ def loginPage(request):
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
-def home(request):
+
+spaces = [{'id': 1, 'name': 'Chocolar'}, ]
+
+def blog(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
-    return render(request, 'base/home.html', {})
+    return render(request, 'base/blog.html', {'spaces': spaces})
+
+
+def space(request, pk):
+    space = None
+    for i in spaces:
+        if i['id'] == int(pk):
+            space = i
+    context = {'space': space}
+    return render(request, 'base/space.html', context)
 
 
 def logoutUser(request):
@@ -165,8 +177,6 @@ def detalle_accion(request, symbol):
     return render(request, 'base/detalle_accion.html', context)
 
 
-def blog(request):
-    return render(request, 'base/blog.html', {})
 
 def trading(request):
     return render(request, 'base/blog.html', {})
