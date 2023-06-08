@@ -9,9 +9,8 @@ urlpatterns = [
     path('activos/', views.activos, name='activos'),
     path('detalle-accion/<str:symbol>/', views.detalle_accion, name='detalle_accion'),
 
-    path('', views.activos, name="home"),
-
-    path('blog/', views.post_list, name="blog"),
+    path('blog/', views.blog, name="blog"),
+    path('space/<str:pk>/', views.space, name="space"),
     path('trading/', views.trading, name="trading"),
 
 ]
