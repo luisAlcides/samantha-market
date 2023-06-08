@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('', views.activos, name="home"),
 
-    path('blog/', views.blog, name="blog"),
+    path('blog/', views.post_list, name="blog"),
     path('trading/', views.trading, name="trading"),
 
 ]

@@ -6,10 +6,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import User
+from .models import User, Post
 from .forms import UserForm, MyUserCreationForm
 
 from django.utils.translation import activate
+
+import yfinance as yf
 
 
 
@@ -102,8 +104,6 @@ def updateUser(request):
 #     return render(request, 'base/activos.html', {'cards_data': cards_data})
 
 
-import yfinance as yf
-import pandas as pd
 
 def activos(request):
     details = None
@@ -164,6 +164,11 @@ def detalle_accion(request, symbol):
     
     return render(request, 'base/detalle_accion.html', context)
 
+
+
+def post_list(request):
+    posts = Post.objects.all().order_by('-pub_date')
+    return render(request, 'base/post_list.html',{'posts': posts})
 
 def blog(request):
     return render(request, 'base/blog.html', {})
