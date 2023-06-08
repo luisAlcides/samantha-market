@@ -1,10 +1,11 @@
 {% extends 'main.html' %}
 
 {% block content %}
-
+    <h1>Blog</h1>
     {% for space in spaces %}
         <div>
-           <h5>{{space.id}} -- <a href='{% url "space" space.id %}'>{{space.name}}</a></h5> 
+           <h5><a href='{% url "space" space.id %}'>{{space.name}}</a></h5>
+           <p>{{space.description}}</p> 
         </div>
     {% endfor %}
 

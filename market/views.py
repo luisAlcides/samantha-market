@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import User, Post
+from .models import User, Post, Space
 from .forms import UserForm, MyUserCreationForm
 
 from django.utils.translation import activate
@@ -42,20 +42,18 @@ def loginPage(request):
     return render(request, 'base/login_register.html', context)
 
 
-spaces = [{'id': 1, 'name': 'Chocolar'}, ]
 
 def blog(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
+    spaces = Space.objects.all() 
+    context = {'spaces': spaces}   
 
-    return render(request, 'base/blog.html', {'spaces': spaces})
+    return render(request, 'base/blog.html', context)
 
 
 def space(request, pk):
-    space = None
-    for i in spaces:
-        if i['id'] == int(pk):
-            space = i
-    context = {'space': space}
+    spaces = Space.objects.get(id=pk)
+    context = {'spaces': spaces}
     return render(request, 'base/space.html', context)
 
 
