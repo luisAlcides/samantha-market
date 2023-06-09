@@ -10,6 +10,7 @@ urlpatterns = [
     path('detalle-accion/<str:symbol>/', views.detalle_accion, name='detalle_accion'),
 
     path('', views.blog, name="blog"),
+    path('create-space/',  views.createSpace, name='create-space'),
     path('space/<str:pk>/', views.space, name="space"),
     path('trading/', views.trading, name="trading"),
 

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .models import User, Post, Space
-from .forms import UserForm, MyUserCreationForm
+from .forms import UserForm, MyUserCreationForm, SpaceForm
 
 from django.utils.translation import activate
 
@@ -42,7 +42,7 @@ def loginPage(request):
     return render(request, 'base/login_register.html', context)
 
 
-
+# blog
 def blog(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     spaces = Space.objects.all() 
@@ -57,11 +57,23 @@ def space(request, pk):
     return render(request, 'base/space.html', context)
 
 
+def createSpace(request):
+    form = SpaceForm()
+    if request.method == 'POST':
+        form = SpaceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('blog')   
+    context = {'form': form}
+    return  render(request, 'base/space_form.html', context)
+    
+
+
 def logoutUser(request):
     logout(request)
     return redirect('home')
 
-
+ 
 def registerPage(request):
     form = MyUserCreationForm()
 

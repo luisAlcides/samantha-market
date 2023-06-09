@@ -1,12 +1,18 @@
-{% extends 'main.html' %}
-
-{% block content %}
-    <h1>Blog</h1>
-    {% for space in spaces %}
-        <div>
-           <h5><a href='{% url "space" space.id %}'>{{space.name}}</a></h5>
-           <p>{{space.description}}</p> 
-        </div>
-    {% endfor %}
+{% extends 'main.html' %} {% block content %}
+<h1>Blog</h1>
+<div>
+	<div>
+        <a href="{% url 'create-space' %}">Crear Post</a>
+		{% for space in spaces %}
+		<div>
+			<span>@{{space.host.username}}</span>
+			<h5><a href='{% url "space" space.id %}'>{{space.name}}</a></h5>
+			<small>{{space.topic.name}}</small>
+			<hr />
+			<p>{{space.description}}</p>
+		</div>
+		{% endfor %}
+	</div>
+</div>
 
 {% endblock content %}
