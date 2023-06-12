@@ -148,7 +148,7 @@ def activos(request):
             'marketCap': stock.info['marketCap'],
             
         }
-
+        
     symbols = ['AAPL', 'MSFT', 'AMZN']
     stocks = []
     most_active_data = []

@@ -76,3 +76,10 @@ img{
     background-color: var(--color-dark);
   }
 
+.card-subtitle{
+  color: rgb(108, 92, 214);
+}
+
+.card-footer{
+  background-color: red;
+}

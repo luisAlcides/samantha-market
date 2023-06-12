@@ -1,18 +1,22 @@
-{% extends 'main.html' %} {% block content %}
-<h1>Blog</h1>
-<div>
-	<div>
-        <a href="{% url 'create-space' %}">Crear Post</a>
-		{% for space in spaces %}
-		<div>
-			<span>@{{space.host.username}}</span>
-			<h5><a href='{% url "space" space.id %}'>{{space.name}}</a></h5>
-			<small>{{space.topic.name}}</small>
-			<hr />
-			<p>{{space.description}}</p>
-		</div>
-		{% endfor %}
-	</div>
-</div>
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
 
+<h1>Blog</h1>
+<div class="container">
+    <div class="card-deck">
+        {% for space in spaces %}
+        <div class="card  mb-2">
+            <div class="card-body">
+                <h5 class="card-title" ><a href='{% url "space" space.id %}' style="text-decoration: none; color: #f0e68c;">{{space.name}}</a></h5>
+                <h6 class="card-subtitle mb-2">@{{space.host.username}}</h6>
+                <p class="card-text" style="color: white;">{{space.description}}</p>
+            </div>
+            <div class="card-footer" style="border-color: white;">
+                <small class="text-muted"><p style="color: #f0e68c;">{{space.topic.name}}</p></small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}
