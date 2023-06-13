@@ -1,6 +1,7 @@
 import yfinance as yf
 
 from django.shortcuts import render, redirect
+
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -43,19 +44,22 @@ def loginPage(request):
 
 
 # blog
-def blog(request):
+# def blog(request):
+#     q = request.GET.get('q') if request.GET.get('q') != None else ''
+#     spaces = Space.objects.all() 
+#     context = {'spaces': spaces}   
+
+#     return render(request, 'base/blog.html', context)
+
+
+# spaces
+
+def space(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     spaces = Space.objects.all() 
     context = {'spaces': spaces}   
 
-    return render(request, 'base/blog.html', context)
-
-
-def space(request, pk):
-    spaces = Space.objects.get(id=pk)
-    context = {'spaces': spaces}
     return render(request, 'base/space.html', context)
-
 
 def createSpace(request):
     form = SpaceForm()
@@ -65,7 +69,28 @@ def createSpace(request):
             form.save()
             return redirect('blog')   
     context = {'form': form}
-    return  render(request, 'base/space_form.html', context)
+    return  render(request, 'base/spaces_form.html', context)
+    
+
+def updateSpace(request, pk):
+    spaces = Space.objects.get(id=pk)
+    form = SpaceForm(instance=spaces)
+    
+    if request.method == 'POST':
+        form = SpaceForm(request.POST, instance=spaces)
+        if form.is_valid():
+            form.save()
+            return redirect('blog') 
+    
+    context = {'spacess': spaces, 'form': form}
+    
+    return render(request, 'base/space_form.html', context)
+
+
+
+def deleteSpace(request, pk):
+    spaces = Space.objects.get(id=pk)
+    return redirect('blog')
     
 
 
