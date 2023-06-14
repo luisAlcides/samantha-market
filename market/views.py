@@ -67,31 +67,32 @@ def createSpace(request):
         form = SpaceForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('blog')   
+            return redirect('home')   
     context = {'form': form}
-    return  render(request, 'base/spaces_form.html', context)
+    return  render(request, 'base/space_form.html', context)
     
 
 def updateSpace(request, pk):
-    spaces = Space.objects.get(id=pk)
-    form = SpaceForm(instance=spaces)
+    space = Space.objects.get(id=pk)
+    form = SpaceForm(instance=space)
     
     if request.method == 'POST':
-        form = SpaceForm(request.POST, instance=spaces)
+        form = SpaceForm(request.POST, instance=space)
         if form.is_valid():
             form.save()
-            return redirect('blog') 
+            return redirect('home') 
     
-    context = {'spacess': spaces, 'form': form}
+    context = {'spaces': space, 'form': form}
     
     return render(request, 'base/space_form.html', context)
 
 
-
 def deleteSpace(request, pk):
-    spaces = Space.objects.get(id=pk)
-    return redirect('blog')
-    
+    space = Space.objects.get(id=pk)
+    if request.method == 'POST':
+        space.delete()
+        return redirect('home')
+    return render(request, 'base/delete.html', {'obj': space})
 
 
 def logoutUser(request):
