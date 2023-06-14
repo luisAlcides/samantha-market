@@ -1,26 +1,53 @@
-{% extends 'main.html' %}
-{% load static %}
+{% extends 'main.html' %} 
+{% load static %} 
 {% block content %}
 
-<a href="{% url 'create-space' %}" class="btn btn-primary btn-sm mr-2 mb-3">Crear Post</a>
-<div class="container">
-    <div class="card-deck">
-        {% for space in spaces %}
-        <div class="card mb-2">
-            <div class="card-body">
-                <h5 class="card-title"><a href='{% url "space" space.id %}' style="text-decoration: none; color: #f0e68c;">{{space.name}}</a></h5>
-                <h6 class="card-subtitle mb-2" style="color: rgb(108, 92, 214);">@{{space.host.username}}</h6>
-                <div class="d-flex justify-content-end">
-                    <a href="{% url 'update-space' space.id %}" class="btn btn-primary btn-sm mr-2">Editar</a>
-                    <a href="{% url 'delete-space' space.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-                </div>
-                <p class="card-text" style="color: white;">{{space.description}}</p>
-            </div>
-            <div class="card-footer" style="border-color: white;">
-                <small class="text-muted"><p style="color: #f0e68c;">{{space.topic.name}}</p></small>
+<div class="home-container overflow-hidden">
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="Category">
+                <h3>Categorias</h3>
+                <hr>
             </div>
         </div>
-        {% endfor %}
+        <div class="col-md-6">
+            <div class="content">
+                <a href="{% url 'create-space' %}" class="btn btn-primary btn-sm mr-2 mb-3">Crear Post</a>
+                <div class="container">
+                    <div class="card-deck">
+                        {% for space in spaces %}
+                        <div class="card mb-2 card-compact">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href='{% url "space" space.id %}' style="text-decoration: none; color: #f0e68c">{{space.name}}</a>
+                                </h5>
+                                <h6 class="card-subtitle mb-2" style="color: rgb(108, 92, 214)">
+                                    @{{space.host.username}}
+                                </h6>
+                                <div class="d-flex justify-content-end">
+                                    <a href="{% url 'update-space' space.id %}" class="btn btn-primary btn-sm mr-2">Editar</a>
+                                    <a href="{% url 'delete-space' space.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                                </div>
+                                <p class="card-text" style="color: white">{{space.description}}</p>
+                            </div>
+                            <div class="card-footer" style="border-color: white">
+                                <small class="text-muted">
+                                    <p style="color: #f0e68c">{{space.topic.name}}</p>
+                                </small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="recent">
+                <!-- Contenido del div "recent" -->
+            </div>
+        </div>
     </div>
 </div>
+
 {% endblock content %}
