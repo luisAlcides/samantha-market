@@ -22,11 +22,7 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text"><strong>Símbolo:</strong><strong class="text-warning"> {{ cryptocurrency.symbol }}</strong></p>
-                        {% if cryptocurrency.price_change_percentage_24h >= 0 %}
                             <p class="card-text"><strong>Precio:</strong> <span class="text-success">{{ cryptocurrency.price }}</span></p>
-                        {% else %}
-                            <p class="card-text"><strong>Precio:</strong> <span class="text-danger">{{ cryptocurrency.price }}</span></p>
-                        {% endif %}
                     </div>
                 </div>
             </div>

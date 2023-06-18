@@ -3,7 +3,6 @@
 {% block content %}
 
 <div class="home-container overflow-hidden">
-
     <div class="row">
         <div class="col-md-3">
             <div class="Category">
@@ -13,7 +12,7 @@
         </div>
         <div class="col-md-6">
             <div class="content">
-                <a href="{% url 'create-space' %}" class="btn btn-primary btn-sm mr-2 mb-3">Crear Post</a>
+                <a href="{% url 'create-space' %}" class="btn btn-primary btn-sm mr-2 mb-3 mt-3">Crear Post</a>
                 <div class="container">
                     <div class="card-deck">
                         {% for space in spaces %}
@@ -25,11 +24,7 @@
                                 <h6 class="card-subtitle mb-2" style="color: rgb(108, 92, 214)">
                                     @{{space.host.username}}
                                 </h6>
-                                <div class="d-flex justify-content-end">
-                                    <a href="{% url 'update-space' space.id %}" class="btn btn-primary btn-sm mr-2">Editar</a>
-                                    <a href="{% url 'delete-space' space.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-                                </div>
-                                <p class="card-text" style="color: white">{{space.description}}</p>
+                                <p class="card-text" style="color: white">{{ space.description|slice:":300" }}</p>
                             </div>
                             <div class="card-footer" style="border-color: white">
                                 <small class="text-muted">

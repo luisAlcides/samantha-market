@@ -9,13 +9,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
+from django.core.cache import cache
 from .models import User, Post, Space, Cryptocurrency
 from .forms import UserForm, MyUserCreationForm, SpaceForm
 
 from django.utils.translation import activate
-
-
-
 
 
 env = environ.Env()
@@ -50,17 +48,6 @@ def loginPage(request):
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
-
-# blog
-# def blog(request):
-#     q = request.GET.get('q') if request.GET.get('q') != None else ''
-#     spaces = Space.objects.all() 
-#     context = {'spaces': spaces}   
-
-#     return render(request, 'base/blog.html', context)
-
-
-# spaces
 
 def space(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -126,7 +113,7 @@ def registerPage(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'An error occurred during registration')
+            messages.error(request, 'Ocurrio un error al registrarse')
 
     return render(request, 'base/login_register.html', {'form': form})
 
@@ -146,28 +133,42 @@ def updateUser(request):
 
 
 
-
-# def activos(request):
-#     symbols = obtener_simbolos_disponibles()
-#     stocks = []
-#     cards_data = []
-
-#     for symbol in symbols:
-#         stocks.append(yf.Ticker(symbol))
-
-#     for stock in stocks:
-#         symbol = stock.info['symbol']
-#         price = round(stock.history().tail(1)["Close"].iloc[0], 4)
-#         num_purchases = obtener_num_compras(symbol) 
-#         cards_data.append({'title': symbol, 'price': price, 'num_purchases': num_purchases})
-
-#     cards_data.sort(key=lambda x: x['num_compras'], reverse=True)
-
-#     return render(request, 'base/activos.html', {'cards_data': cards_data})
-
-
-
 def activos(request):
+    details = None
+    most_active_data = {}
+
+    if request.method == 'POST':
+        symbol = request.POST.get('symbol')
+        stock = yf.Ticker(symbol)
+
+        if 'longName' in stock.info:
+            name = stock.info['longName']
+        else:
+            name = 'Nombre no disponible'
+
+        details = {
+            'symbol': stock.info.get('symbol'),
+            'name': name,
+            'price': round(stock.history().tail(1)['Close'].iloc[0], 4),
+            'country': stock.info['country'],
+            'marketCap': stock.info['marketCap'],
+        }
+
+    cache_key = 'most_active_data'
+    most_active_data = cache.get(cache_key)
+
+    if not most_active_data:
+        symbols = ['AAPL', 'MSFT', 'AMZN']
+        most_active_data = []
+
+        for symbol in symbols:
+            stock = yf.Ticker(symbol)
+            price = round(stock.history().tail(1)["Close"].iloc[0], 4)
+            most_active_data.append({'title': symbol, 'price': price})
+
+        cache.set(cache_key, most_active_data, timeout=60)  # Cache the data for 60 seconds
+
+    return render(request, 'base/activos.html', {'details': details, 'most_active_data': most_active_data})
     details = None
     most_active_data = {}
 
@@ -233,7 +234,7 @@ def crypto(request):
 
         url = f'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
         headers = {'X-CMC_PRO_API_KEY': env('API_KEY')}
-        params = {'start': '1', 'limit': '10', 'convert': 'USD'}
+        params = {'start': '1', 'limit': '200', 'convert': 'USD'}
         response = requests.get(url, headers=headers, params=params)
         data = response.json()
 
@@ -253,5 +254,6 @@ def crypto(request):
 
 
 
+
 def trading(request):
-    return render(request, 'base/blog.html', {})
+    return render(request, 'base/trading.html', {})

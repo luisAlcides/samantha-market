@@ -3,6 +3,10 @@
 {% block content %}
     <div class="container mt-3">
                 <div class="">
+                    <div class="d-flex justify-content-end">
+                        <a href="{% url 'update-space' space.id %}" class="btn btn-primary btn-sm mr-2">Editar</a>
+                        <a href="{% url 'delete-space' space.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </div>
                     <h5 class="title" style=>{{ space.name }}</h5>
                     <hr>
                     <p class="" >{{ space.description }}</p>
