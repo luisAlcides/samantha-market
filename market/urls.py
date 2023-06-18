@@ -13,7 +13,8 @@ urlpatterns = [
     path('create-space/',  views.createSpace, name='create-space'),
     path('update-space/<str:pk>/',  views.updateSpace, name='update-space'),
     path('delete-space/<str:pk>/',  views.deleteSpace, name='delete-space'),
-    path('space/<str:pk>/', views.space, name="space"),
+    path('space/<str:pk>/', views.post, name="post"),
+    path('crypto/', views.crypto, name="crypto"),
     path('trading/', views.trading, name="trading"),
 
 ]

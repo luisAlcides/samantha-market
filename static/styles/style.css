@@ -25,6 +25,20 @@ img{
 }
   
 
+p{
+  font-family: arial;
+  color:white;
+}
+
+hr{
+  background-color: white;
+}
+
+.title{
+  text-decoration: none; 
+  color: #f0e68c
+}
+
 /* navbar */
 
 

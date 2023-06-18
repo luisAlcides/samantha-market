@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Buscar criptomonedas</h1>
+    <form method="POST" action="{% url 'crypto' %}">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" name="search_query" class="form-control" placeholder="Ingrese el nombre de la criptomoneda">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+    <hr>
+    {% if cryptocurrencies %}
+        <h2>Información de la criptomoneda:</h2>
+        <div class="row">
+            {% for cryptocurrency in cryptocurrencies %}
+            <div class="col-md-6 col-lg-4 mx-auto">
+                <div class="card text-center">
+                    <div class="card-header bg-primary text-light">
+                        <h5 class="card-title mb-0">{{ cryptocurrency.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>Símbolo:</strong><strong class="text-warning"> {{ cryptocurrency.symbol }}</strong></p>
+                        {% if cryptocurrency.price_change_percentage_24h >= 0 %}
+                            <p class="card-text"><strong>Precio:</strong> <span class="text-success">{{ cryptocurrency.price }}</span></p>
+                        {% else %}
+                            <p class="card-text"><strong>Precio:</strong> <span class="text-danger">{{ cryptocurrency.price }}</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

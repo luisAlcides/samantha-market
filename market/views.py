@@ -1,4 +1,6 @@
 import yfinance as yf
+import environ
+import requests
 
 from django.shortcuts import render, redirect
 
@@ -7,13 +9,19 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import User, Post, Space
+from .models import User, Post, Space, Cryptocurrency
 from .forms import UserForm, MyUserCreationForm, SpaceForm
 
 from django.utils.translation import activate
 
-import yfinance as yf
 
+
+
+
+env = environ.Env()
+environ.Env.read_env()
+
+ENVIRONMENT = env
 
 
 # Create your views here.
@@ -60,6 +68,12 @@ def space(request):
     context = {'spaces': spaces}   
 
     return render(request, 'base/space.html', context)
+
+def post(request, pk):
+    space = Space.objects.get(id=pk)
+    context = {'space': space}
+    return render(request, 'base/post.html', context)
+
 
 def createSpace(request):
     form = SpaceForm()
@@ -211,6 +225,31 @@ def detalle_accion(request, symbol):
     }
     
     return render(request, 'base/detalle_accion.html', context)
+
+
+def crypto(request):
+    if request.method == 'POST':
+        search_query = request.POST.get('search_query')
+
+        url = f'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+        headers = {'X-CMC_PRO_API_KEY': env('API_KEY')}
+        params = {'start': '1', 'limit': '10', 'convert': 'USD'}
+        response = requests.get(url, headers=headers, params=params)
+        data = response.json()
+
+        cryptocurrencies = []
+        for result in data['data']:
+            if result['name'].lower() == search_query.lower() or result['symbol'].lower() == search_query.lower():
+                cryptocurrency = Cryptocurrency(
+                    name=result['name'],
+                    symbol=result['symbol'],
+                    price=result['quote']['USD']['price']
+                )
+                cryptocurrencies.append(cryptocurrency)
+
+        return render(request, 'base/crypto.html', {'cryptocurrencies': cryptocurrencies})
+
+    return render(request, 'base/crypto.html')
 
 
 
